@@ -12,7 +12,7 @@
 #include "init.h"
 
 //DISPLAY UPDATE FREQUENCY (REFRESH RATE = TICK_FREQ/25) 25=# OF TOTAL SEGMENTS
-#define TICK_FREQ 5000
+#define TICK_FREQ 30001
 
 //STATE CONSTANTS
 #define TURN_ON 1
@@ -38,10 +38,9 @@ int main(void) {
     const uint8_t digitData[] = {ZERO, ONE, TWO, THREE, FOUR, FIVE, SIX, SEVEN, EIGHT, NINE}; //TODO: ADD DOT ON/OFF
     //CONTAINER FOR CURRENT DIGIT DATA
     uint8_t data[DIGITS+DOTS] = {0, 0, 0, 0, 0, 0};
-    //data[0] = DASH;
-    //data[1] = digitData[8];
 
 	uint32_t currTicks = 0;
+	uint32_t holdTicks = 0;
 	setupPorts();
 	setupTimers();
 
@@ -52,20 +51,24 @@ int main(void) {
 			switch (state)
 			{
 			case TURN_ON:
-				if (data[currentDigit] & (1<<currentBit)) currentSegmentOn();
+				if (data[currentDigit] & (1 << currentBit)) currentSegmentOn();
 				state = TURN_OFF;
+				holdTicks = sysTicks;
 				break;
 
 			case TURN_OFF:
-				if (data[currentDigit] & (1<<currentBit)) currentSegmentOff();
-				if (currentDigit == (DIGITS+DOTS-1)) currentDigit = 0; //ADD DOTS TO THE MIX
-				else
+				if(sysTicks - holdTicks >= TICK_FREQ/3000)
 				{
-					currentDigit++;
-					currentBit++;
+					currentSegmentOff();
+					if (currentDigit == (DIGITS+DOTS-1)) currentDigit = 0; //ADD DOTS TO THE MIX
+					else
+					{
+						currentDigit++;
+						currentBit++;
+					}
+					(currentBit == sizeof(currentBit)*8) ? currentBit = 0 : currentBit;
+					state = TURN_ON;
 				}
-				(currentBit == sizeof(currentBit)*8) ? currentBit = 0 : currentBit;
-				state = TURN_ON;
 				break;
 			}
 			updateDisplay = 0;
@@ -87,11 +90,11 @@ void setupPorts()
     uint8_t loop = 0;
     for (loop = 0; loop < SOURCEPINS; loop++)
     {
-    	LPC_GPIO->DIR[sourcePin[loop].mPORT] |= (1<<sourcePin[loop].mPin);
+    	LPC_GPIO->DIR[sourcePin[loop].mPORT] |= (1 << sourcePin[loop].mPin);
     }
     for (loop = 0; loop < SINKPINS; loop++)
     {
-    	LPC_GPIO->DIR[sinkPin[loop].mPORT] |= (1<<sinkPin[loop].mPin);
+    	LPC_GPIO->DIR[sinkPin[loop].mPORT] |= (1 << sinkPin[loop].mPin);
     }
 }
 

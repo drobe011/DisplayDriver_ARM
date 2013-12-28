@@ -115,8 +115,9 @@ _digit portMap[DIGITS+DOTS] =
 
 __inline void currentSegmentOn()
 {
-    LPC_GPIO->SET[sourcePin[portMap[currentDigit].Pin[SOURCE][currentBit]].mPORT] = (1 << sourcePin[portMap[currentDigit].Pin[SOURCE][currentBit]].mPin);
-    LPC_GPIO->SET[sinkPin[portMap[currentDigit].Pin[SINK][currentBit]].mPORT] = (1 << sinkPin[portMap[currentDigit].Pin[SINK][currentBit]].mPin);
+	LPC_GPIO->SET[sinkPin[portMap[currentDigit].Pin[SINK][currentBit]].mPORT] = (1 << sinkPin[portMap[currentDigit].Pin[SINK][currentBit]].mPin);
+	LPC_GPIO->SET[sourcePin[portMap[currentDigit].Pin[SOURCE][currentBit]].mPORT] = (1 << sourcePin[portMap[currentDigit].Pin[SOURCE][currentBit]].mPin);
+
 }
 
 __inline void currentSegmentOff()
