@@ -86,8 +86,8 @@ _pin sourcePin[SOURCEPINS] =
 	{1, 14}, //PIN_16
 	{1, 15}, //PIN_17
 	{1, 16}, //PIN_18
-	{1, 17}, //PIN_19
-	{1, 18}, //PIN_20
+	{1, 17}, //PIN_19 *****change to 1, 24 on LPC1315
+	{1, 18}, //PIN_20 *****change to 1, 25 on LPC1315
 	{1, 19}  //PIN_21
 };
 
