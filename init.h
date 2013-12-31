@@ -75,27 +75,27 @@ typedef struct _pin
 
 _pin sourcePin[SOURCEPINS] =
 {
-	{0, 17}, //PIN_4
-	{0, 18}, //PIN_5
-	{0, 19}, //PIN_6
-	{0, 20}, //PIN_9
-	{0, 21}, //PIN_10
-	{0, 22}, //PIN_12
-	{0, 23}, //PIN_13
-	{1, 13}, //PIN_15
-	{1, 14}, //PIN_16
-	{1, 15}, //PIN_17
-	{1, 16}, //PIN_18
-	{1, 17}, //PIN_19 *****change to 1, 24 on LPC1315
+	{1, 24}, //PIN_4 **not on 1347
+	{1, 23}, //PIN_5
+	{0, 21}, //PIN_6
+	{0, 5}, //PIN_9
+	{0, 4}, //PIN_10
+	{0, 3}, //PIN_12
+	{1, 20}, //PIN_13
+	{1, 27}, //PIN_15
+	{1, 26}, //PIN_16
+	{1, 22}, //PIN_17 
+	{0, 15}, //PIN_18  **alt
+	{0, 16}, //PIN_19
 	{1, 18}, //PIN_20 *****change to 1, 25 on LPC1315
-	{1, 19}  //PIN_21
+	{1, 16}  //PIN_21
 };
 
 _pin sinkPin[SINKPINS] =
 {
-	{0, 7}, //PIN_1
-	{0, 2}, //PIN_2
-	{1, 20} //PIN_3
+	{1, 31}, //PIN_1
+	{1, 28}, //PIN_2
+	{0, 7} //PIN_3
 };
 
 typedef struct _digit
